@@ -38,8 +38,8 @@
         <div class="tx"></div>
         <div class="daoh">
           <ul class="MenuList">
-            <li :key="item" v-for="item in menu">
-              <a href>{{item.text}}</a>
+            <li :key="item.path" v-for="item in menu">
+              <router-link :to="item.path">{{item.text}}</router-link>
             </li>
           </ul>
         </div>
