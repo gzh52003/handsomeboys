@@ -41,7 +41,7 @@
               <i :class="item.icon" style="color:#fff"></i>
               {{item.text}}
             </el-menu-item>
-             <!-- 否则就这样 -->
+            <!-- 否则就这样 -->
             <el-submenu :key="item.path" :index="item.path" v-else>
               <!-- 插槽 -->
               <template v-slot:title>
@@ -123,7 +123,7 @@ export default {
           text: "订单管理",
           path: "/order",
           icon: "el-icon-s-order",
-           submenu: [
+          submenu: [
             {
               text: "订单添加",
               path: "/orderinsert",
@@ -142,14 +142,57 @@ export default {
   },
   async created() {
     console.log(789);
-    if (this.$route.path == "/login" ||  this.$route.path ==  "/reg"||this.$route.path ==  "/forget") {
+    if (
+      this.$route.path == "/login" ||
+      this.$route.path == "/reg" ||
+      this.$route.path == "/forget"
+    ) {
       this.isshow = false;
     } else {
       this.isshow = true;
     }
+    this.getuser()
     //退出
     //验证token
-    let currentUser = localStorage.getItem("currentUser");
+    // let currentUser = localStorage.getItem("currentUser");
+    // //前端浏览器用对象
+    // currentUser = JSON.parse(currentUser);
+    // if (!currentUser) {
+    //   this.$router.push("/login");
+    // } else {
+    //   // 校验token的有效性
+    //   const result = await fetch(
+    //     `http://localhost:2003/api/jwtverify?authorization=${currentUser.authorization}`
+    //   ).then((res) => res.json());
+    //   if (result.code === 0) {
+    //     localStorage.removeItem("currentUser");
+    //     this.$router.push("/login");
+    //   } else {
+    //     this.$refs.userInfo.innerText = "欢迎您:" + currentUser.username;
+    //   }
+    // }
+  },
+  watch: {
+    $route: {
+      deep: true,
+      handler(newval) {
+        console.log(newval, 888);
+        if (
+          newval.path == "/login" ||
+          newval.path == "/reg" ||
+          newval.path == "/forget"
+        ) {
+          this.isshow = false;
+        } else {
+          this.isshow = true;
+        }
+      },
+    },
+  },
+  methods: {
+    //获取用户名
+    async getuser(){
+       let currentUser = localStorage.getItem("currentUser");
     //前端浏览器用对象
     currentUser = JSON.parse(currentUser);
     if (!currentUser) {
@@ -166,21 +209,7 @@ export default {
         this.$refs.userInfo.innerText = "欢迎您:" + currentUser.username;
       }
     }
-  },
-  watch: {
-    $route: {
-      deep: true,
-      handler(newval) {
-        console.log(newval, 888);
-        if (newval.path == "/login" ||newval.path == "/reg"||newval.path == "/forget") {
-          this.isshow = false;
-        } else {
-          this.isshow = true;
-        }
-      },
     },
-  },
-  methods: {
     // 退出
     async tui() {
       localStorage.removeItem("currentUser");
@@ -242,5 +271,8 @@ body {
 }
 .el-breadcrumb__inner {
   color: white !important;
+}
+.el-menu{
+  width: 100%!important;
 }
 </style>
