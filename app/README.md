@@ -22,3 +22,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### 项目组长：杨才钦；项目组员：茹进宁，李炜骏，李泳豪
